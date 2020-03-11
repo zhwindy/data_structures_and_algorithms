@@ -46,18 +46,20 @@ int StackLen(Stack s){
 
 /*
 卡住的点有以下几个:
+1.如何正确的设置循环双重循环?
+2.怎么处理不足3位时的循环以及后续的处理?
 */
 
 // 二进制数转换为八进制数
 int main(){
     Stack a, b;
     char c;
-    int i=0, j, k=0, len, oct;
+    int i, j, q, k=0, len;
 
     CreateStack(&a);
     CreateStack(&b);
 
-    printf("请输入二进制串,输入#表示结束:");
+    printf("请输入二进制串,以#结束:");
     scanf("%c", &c);
     while (c != '#')
     {
@@ -66,16 +68,37 @@ int main(){
     }
 
     getchar();
+
     len = StackLen(a);
-    printf("栈的当前容量为:%d\n", len);
+    printf("栈A的当前容量为:%d\n", len);
 
-    while (i<len)
-    {
-        for(j=0; j<3; j++){
-            Pop(&a, &c);
-            k += (c - 48) * pow(2, j);
-            i++;
+    for(i=0; i<len; i+=3){
+        if (a.top - a.base >= 3){
+            for(j=0; j<3; j++){
+                Pop(&a, &c);
+                k += (c - 48) * pow(2, j);
+            }
+            Push(&b, k + 48);
+            k = 0;
+        }
+        else{
+            q = a.top - a.base;
+            // 这里使用q作为循环结束的条件是正确的, 而直接使用j<(a.top - a.base)作为条件是错误的,因为a.top是动态变化的
+            for(j=0; j<q; j++){
+                Pop(&a, &c);
+                k += (c - 48) * pow(2, j);
+            }
+            Push(&b, k + 48);
+        }
     }
+    len = StackLen(b);
 
-    printf("转换为八进制数为:%d\n");
+    printf("栈B的当前容量为:%d\n", len);
+
+    printf("转换成八进制数为:");
+    for(i=0;i<len; i++){
+        Pop(&b, &c);
+        printf("%c", c);
+    }
+    printf("\n");
 }
