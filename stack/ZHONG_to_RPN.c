@@ -48,59 +48,68 @@ int StackLen(Stack* s){
 }
 
 /*
-目标：将中缀表达式转换为后缀表达式(逆波兰表达式)输出, 如中缀表达式4+(5-2) ---> 后缀表达式452-+
+目标：
+将中缀表达式转换为后缀表达式(逆波兰表达式)输出
+
 难点:
 1.如何确定和比较运算符的优先级?
+
+示例：
+1. 4+(5-2) ---> 4 5 2 - +
+2. 1+(2-3)*4+10/5   ---> 1 2 3 - 4 * + 10 5 / +
 */
 int main(){
     Stack a;
     int i=0, j, len;
-    double p;
     char c, e;
-    char str[BUFFER_SIZE];
 
     InitStack(&a);
     printf("请输入合法的中缀表达式,以#结束:");
     scanf("%c", &c);
     while (c != '#')
     {
-        while (isdigit(c))
-        {
-            str[i] = c;
-            i++;
-            str[i] = '\0';
-            if (i >= BUFFER_SIZE){
-                printf("输入的数字长度超限");
-                return -1;
-            }
+        while(c >= '0' && c <= '9'){
+            printf("%c", c);
             scanf("%c", &c);
-
-            if(c == ' '){
-                p = atof(str);
-                printf("%f ", p);
-                i = 0;
-                break;
+            if (c < '0' || c > '9'){
+                printf(" ");
             }
         }
-        switch(c){
-            case '+':
+        if ( c == ')'){
+            Pop(&a, &e);
+            while (e != '(')
+            {
+                printf("%c ", e);
+                Pop(&a, &e);
+            }
+            
+        }
+        else if (c == '+' || c == '-'){
+            if(!StackLen(&a)){
                 Push(&a, c);
-                break;
-            case '-':
-                Push(&a, c);
-                break;
-            case '*':
-                Push(&a, c);
-                break;
-            case '/':
-                Push(&a, c);
-                break;
-            case '(':
-                break;
-            case ')':
-                break;
-            default:
-                break;
+            }
+            else
+            {
+                do{
+                    Pop(&a, &e);
+                    if (e != '('){
+                        printf("%c ", e);
+                    }
+                    else{
+                        Push(&a, e);    //这里是将从栈里弹出的符号再入栈,而不是将接收的符号入栈Push(&a, c)
+                    }
+                }while (StackLen(&a) && e != '(');
+                Push(&a, c);   // 上述判断完毕后,需将本符号入栈
+            }
+        }
+        else if (c == '*' || c == '/' || c == '('){
+            Push(&a, c);
+        }
+        else if (c == '#'){   // 上面有个while循环接收,所以这里需要对是否为#进行判断,否则会有输入错误. 如输入45#的话,会显示输入错误
+            break;
+        }
+        else{
+            printf("输入错误");
         }
         scanf("%c", &c);
     }
@@ -108,7 +117,7 @@ int main(){
     len = StackLen(&a);
     for(j=0; j<len; j++){
         Pop(&a, &e);
-        printf("%c", e);
+        printf("%c ", e);
     }
     printf("\n");
 }
