@@ -16,12 +16,12 @@ int bf(char* s, char* t, int* a){
             j++;
         }
         else{
-            i = i - j + 1;
+            i = i - j + 1;   // 失配时,i指针的回溯位置为本次匹配起始位置的下一个位置
             j = 0;
         }
     }
     printf("i=%d, j=%d\n", i, j);
-    if (j == tlen)
+    if (j == tlen)     // 当j指针完全遍历模式串,说明匹配完成
     {
         *a = (i - j);
         return 1;
