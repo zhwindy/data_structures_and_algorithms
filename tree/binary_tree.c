@@ -56,7 +56,7 @@ void CreateBTree_2(BTnode* T)
 }
 
 // 无参数创建二叉树,返回数根节点的指针
-BTnode* InitBTree()
+BTnode* CreateBTree_3()
 {
     BTnode* s;
     char c;
@@ -68,8 +68,8 @@ BTnode* InitBTree()
     {
         s = (BTnode*)malloc(sizeof(BTnode));
         s->data = c;
-        s->lchild = InitBTree();
-        s->rchild = InitBTree();
+        s->lchild = CreateBTree_3();
+        s->rchild = CreateBTree_3();
     }
     return s;
 } 
@@ -96,7 +96,7 @@ int main()
     BTnode* t;
     int level = 1;
     // CreateBTree(&t);
-    // t = InitBTree();
     CreateBTree_2(t);
+    // t = CreateBTree_3();
     PreOrderTrval(t, level);
 }
