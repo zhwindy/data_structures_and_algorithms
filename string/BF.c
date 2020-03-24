@@ -34,8 +34,8 @@ int main(){
     // char* st = "Ilovecold.cc";
     // char* rt = "vec";
 
-    char* st = "Ilovezhaypqngfei.coldlar.cc we love bitcoin";
-    char* rt = "coin";
+    char* st = "Ilovezhaypqngfei.cababaaabaoldlar.cc we love bitcoin";
+    char* rt = "ababaaaba";
     
     bf(st, rt, &pos);
     printf("子串的位置为: %d\n", pos);
