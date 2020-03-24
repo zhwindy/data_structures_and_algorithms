@@ -25,7 +25,7 @@ void CreateBTree(BiTree* T)   // BiTree*  == BTnode** 代表指向节点的指�
     char c;
     scanf("%c", &c);
 
-    if (c == ' '){
+    if (c == '#'){
         *T = NULL;
     }
     else
@@ -37,7 +37,7 @@ void CreateBTree(BiTree* T)   // BiTree*  == BTnode** 代表指向节点的指�
     }
 }
 
-// 有参数创建二叉树: 根据前序遍历输入节点
+// 有参数创建二叉树: 根据前序遍历输入节点, 此方法行不通-原因是传入的参数是指向节点的指针,这里必须传入二级指针才行
 void CreateBTree_2(BTnode* T)
 {
     char c;
@@ -91,12 +91,14 @@ void PreOrderTrval(BTnode* T, int level)
     }
 }
 
+// 创建二叉树时输入序列: AB#D##CE###
 int main()
 {
     BTnode* t;
     int level = 1;
-    // CreateBTree(&t);
-    CreateBTree_2(t);
+    printf("请按二叉树前序遍历结果输入序列:");
+    CreateBTree(&t);
+    // CreateBTree_2(t);
     // t = CreateBTree_3();
     PreOrderTrval(t, level);
 }
