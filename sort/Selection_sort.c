@@ -1,5 +1,6 @@
 #include "stdio.h"
 
+// 简单选择排序
 void SelectSort(int *a, int n)
 {
     int i, j, min, tmp;
