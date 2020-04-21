@@ -1,6 +1,7 @@
 #include "stdio.h"
 
 #define DATA_SIZE 14
+
 int iCompareCount = 0;
 
 void swap(int data[], int i, int j)
@@ -34,6 +35,7 @@ void heapAdjust(int data[], int s, int iDataSize)
         data[s] = iTemp;
 }
 
+// 堆排序
 void heapSort(int data[], int iDataSize)
 {
         int i = 0;
@@ -56,7 +58,7 @@ void printResult(int data[], int iDataSize)
         {
                 printf("%d ", data[i]);
         }
-        printf("\n\n");
+        printf("\n");
 }
 
 int main()
@@ -64,6 +66,4 @@ int main()
         int data[DATA_SIZE] = {3,6,1,4,2,5,9,33,8,1,22,32,11,18};
         heapSort(data, DATA_SIZE - 1);
         printResult(data, DATA_SIZE);
-
-        return 0;
 }
